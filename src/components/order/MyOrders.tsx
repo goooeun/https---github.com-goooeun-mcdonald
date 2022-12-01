@@ -74,8 +74,6 @@ function MyOrders() {
             </Address>
             <OrderView>
                 <OrderItem />
-                <OrderItem />
-                <OrderItem />
             </OrderView>
             <BottomArea>
                 <FlexBox>
