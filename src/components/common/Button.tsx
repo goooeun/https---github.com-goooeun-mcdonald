@@ -53,7 +53,6 @@ const Button = styled.button<ButtonProps>`
                 `;
         }
     }}
-    cursor: pointer;
 `;
 
 Button.defaultProps = {

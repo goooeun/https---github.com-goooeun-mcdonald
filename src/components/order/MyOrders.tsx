@@ -2,16 +2,17 @@ import theme from 'assets/style/theme';
 import Button from 'components/common/Button';
 import { useState } from 'react';
 import styled from 'styled-components';
+import OrderItem from './OrderItem';
 
 const Container = styled.div`
     position: absolute;
     top: 0;
     right: 0;
-    width: 320px;
+    width: 360px;
     height: 100%;
     background-color: #f9f9f9;
     border-radius: 0 8px 8px 0;
-    padding: 50px 32px;
+    padding: 50px 20px;
     display: flex;
     flex-direction: column;
 `;
@@ -33,8 +34,8 @@ const Address = styled.div`
 const OrderView = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 16px 0;
-    overflow-y: hidden;
+    padding: 0 3px;
+    overflow-y: scroll;
     flex-grow: 1;
 `;
 
@@ -71,7 +72,11 @@ function MyOrders() {
                 <h5>서울시 강서구 강서로 123길 45</h5>
                 <h5>사이다아파트 607호</h5>
             </Address>
-            <OrderView></OrderView>
+            <OrderView>
+                <OrderItem />
+                <OrderItem />
+                <OrderItem />
+            </OrderView>
             <BottomArea>
                 <FlexBox>
                     <div className="text">주문금액</div>

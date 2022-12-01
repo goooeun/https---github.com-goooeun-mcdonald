@@ -66,6 +66,10 @@ const GlobalStyle = createGlobalStyle`
         list-style: none;
     }
 
+    a, button {
+        cursor: pointer;
+    }
+
     button:hover {
         opacity: 0.7;
     }

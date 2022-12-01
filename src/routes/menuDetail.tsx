@@ -17,7 +17,6 @@ const BackButton = styled.button`
         font-size: 30px;
         color: #fff;
     }
-    cursor: pointer;
 `;
 
 const ImgWrapper = styled.div`

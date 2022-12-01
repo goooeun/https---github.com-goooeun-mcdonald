@@ -5,7 +5,7 @@ import IMenu from 'types/Menu';
 import MenuList from './MenuList';
 
 const Container = styled.div`
-    width: calc(100% - 320px);
+    width: calc(100% - 350px);
     height: 100%;
     border-radius: 8px;
     background-color: ${theme.colors.lightGray};
