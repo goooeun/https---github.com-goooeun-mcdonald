@@ -1,5 +1,6 @@
 import theme from 'assets/style/theme';
 import Button from 'components/common/Button';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -59,6 +60,9 @@ const FlexBox = styled.div`
 `;
 
 function MyOrders() {
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [totalQuantity, setTotalQuantity] = useState(0);
+
     return (
         <Container>
             <h3>My Orders</h3>
@@ -71,11 +75,11 @@ function MyOrders() {
             <BottomArea>
                 <FlexBox>
                     <div className="text">주문금액</div>
-                    <span>40,400원</span>
+                    <span>{totalPrice}원</span>
                 </FlexBox>
                 <FlexBox>
                     <div className="text">총 수량</div>
-                    <span>4개</span>
+                    <span>{totalQuantity}개</span>
                 </FlexBox>
                 <Button color="yellow" size="wide">
                     주문하기

@@ -38,7 +38,7 @@ const menuList: IMenu[] = [
         name: '베이컨토마토디럭스',
         nameEn: 'Bacon Tomato Deluxe',
         price: 6900,
-        setPrice: 10200,
+        comboPrice: 10200,
         img: '001.png',
         type: 'burger',
         description:
@@ -49,7 +49,7 @@ const menuList: IMenu[] = [
         name: '베이컨토마토디럭스',
         nameEn: 'Bacon Tomato Deluxe',
         price: 6900,
-        setPrice: 10200,
+        comboPrice: 10200,
         img: '001.png',
         type: 'burger',
         description:

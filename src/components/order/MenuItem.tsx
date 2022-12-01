@@ -58,7 +58,7 @@ function MenuItem({ item }: ItemProps) {
                 <p>{item.nameEn}</p>
                 <Price>
                     <span>단품 {item.price}원</span>
-                    {item.setPrice && <span>세트 {item.setPrice}원</span>}
+                    {item.comboPrice && <span>세트 {item.comboPrice}원</span>}
                 </Price>
                 <AddButton>
                     <FiShoppingBag />

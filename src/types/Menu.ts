@@ -5,7 +5,7 @@ interface IMenu {
     name: string;
     nameEn: string;
     price: number;
-    setPrice?: number;
+    comboPrice?: number;
     img: string;
     type: BurgerType;
     description: string;
