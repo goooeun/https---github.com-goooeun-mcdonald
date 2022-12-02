@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import IMenu from 'types/Menu';
 import MenuList from './MenuList';
+import { collection, getDocs } from 'firebase/firestore';
+import database from '../../firebase';
 
 const Container = styled.div`
     width: calc(100% - 350px);
@@ -32,41 +34,20 @@ const Navigation = styled.div`
     }
 `;
 
-const menuList: IMenu[] = [
-    {
-        id: 1,
-        name: '베이컨토마토디럭스',
-        nameEn: 'Bacon Tomato Deluxe',
-        price: 6900,
-        comboPrice: 10200,
-        img: '001.png',
-        type: 'burger',
-        description:
-            '베이컨토마토 디럭스 버거에 대한 설명. 이 버거는 굉장히 맛있습니다.',
-    },
-    {
-        id: 2,
-        name: '베이컨토마토디럭스',
-        nameEn: 'Bacon Tomato Deluxe',
-        price: 6900,
-        comboPrice: 10200,
-        img: '001.png',
-        type: 'burger',
-        description:
-            '베이컨토마토 디럭스 버거에 대한 설명. 이 버거는 굉장히 맛있습니다.',
-    },
-    {
-        id: 3,
-        name: '코카-콜라 제로',
-        nameEn: 'Coca-Cola Zero',
-        price: 2000,
-        img: '001.png',
-        type: 'drink',
-        description: '제로콜라에 대한 설명. 매우 맛있으나 칼로리는 제로입니다.',
-    },
-];
-
 function Menu() {
+    const [menu, setMenu] = useState<IMenu[]>([]);
+    useEffect(() => {
+        async function getMenu() {
+            const menuCollection = collection(database, 'menu');
+            const snapshot = await getDocs(menuCollection);
+            const data: IMenu[] = snapshot.docs.map(
+                (doc) => doc.data() as IMenu
+            );
+            setMenu(data);
+        }
+        getMenu();
+    }, []);
+
     const [menuFilter, setMenuFilter] = useState('');
 
     return (
@@ -91,7 +72,7 @@ function Menu() {
                     Drink
                 </button>
             </Navigation>
-            <MenuList list={menuList} filter={menuFilter} />
+            <MenuList list={menu} filter={menuFilter} />
         </Container>
     );
 }
