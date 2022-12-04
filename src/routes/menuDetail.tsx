@@ -1,5 +1,10 @@
+import { useEffect, useState } from 'react';
 import theme from 'assets/style/theme';
+import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
+import { doc, getDoc } from 'firebase/firestore';
+import database from '../firebase';
+import IMenu from 'types/Menu';
 import styled from 'styled-components';
 import { IoArrowBackOutline } from 'react-icons/io5';
 
@@ -74,6 +79,30 @@ const Table = styled.table`
 
 function MenuDetail() {
     const navigate = useNavigate();
+    const { id } = useParams();
+
+    const [menu, setMenu] = useState<IMenu>();
+    useEffect(() => {
+        if (!id) {
+            throw new Response('', {
+                status: 404,
+                statusText: 'Not Fount Page.',
+            });
+        }
+
+        async function getMenuDetail() {
+            const docRef = doc(database, 'menu', id as string);
+            const snapshot = await getDoc(docRef);
+
+            if (snapshot.exists()) {
+                setMenu(snapshot.data() as IMenu);
+            } else {
+                console.log('error - No match data');
+            }
+        }
+        getMenuDetail();
+    }, []);
+
     return (
         <Container>
             <section>
@@ -85,18 +114,13 @@ function MenuDetail() {
                 <div>
                     <ImgWrapper>
                         <img
-                            src={`${process.env.PUBLIC_URL}/assets/burger/001.png`}
+                            src={`${process.env.PUBLIC_URL}/assets/burger/${menu?.img}`}
                         />
                     </ImgWrapper>
-                    <h2>베이컨토마토디럭스</h2>
-                    <h4>Bacon Tomato Deluxe</h4>
+                    <h2>{menu?.name}</h2>
+                    <h4>{menu?.nameEn}</h4>
                     <PointLine />
-                    <p>
-                        두 장의 100% 순 쇠고기 패티에 그릴에 구워 더욱 고소한
-                        1장의 베이컨을 얹고, 신선한 토마토와 양상추, 매콤달콤한
-                        스위트 칠리 소스, 치즈, 마요네즈를 더해 더욱 풍부하고
-                        신선한 맛의 프리미엄 버거
-                    </p>
+                    <p>{menu?.description}</p>
                 </div>
             </section>
             <section style={{ flexGrow: 1 }}>
