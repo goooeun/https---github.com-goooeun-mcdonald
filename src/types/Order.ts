@@ -1,8 +1,8 @@
 import IMenu from './Menu';
 
 interface IOrder {
-    id: number;
-    menuInfo: IMenu;
+    id?: number;
+    menu: IMenu;
     combo: boolean;
     quantity: number;
 }

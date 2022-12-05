@@ -1,3 +1,4 @@
+import { OrderProvider } from 'contexts/OrderContext';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 

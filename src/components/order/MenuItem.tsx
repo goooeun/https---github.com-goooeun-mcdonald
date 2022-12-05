@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { FiShoppingBag } from 'react-icons/fi';
 import theme from 'assets/style/theme';
 import IMenu from 'types/Menu';
+import useOrderContext from 'utils/hooks/useOrderContext';
 
 const Item = styled.div`
     width: calc(100% / 2 - 8px);
@@ -46,6 +47,16 @@ type ItemProps = {
 };
 
 function MenuItem({ item }: ItemProps) {
+    const context = useOrderContext();
+
+    const addMenu = () => {
+        context.addOrder({
+            menu: item,
+            combo: false,
+            quantity: 1,
+        });
+    };
+
     return (
         <Item>
             <div>
@@ -60,7 +71,7 @@ function MenuItem({ item }: ItemProps) {
                     <span>단품 {item.price}원</span>
                     {item.comboPrice && <span>세트 {item.comboPrice}원</span>}
                 </Price>
-                <AddButton>
+                <AddButton onClick={addMenu}>
                     <FiShoppingBag />
                 </AddButton>
             </div>

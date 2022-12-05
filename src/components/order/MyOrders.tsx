@@ -1,6 +1,7 @@
 import theme from 'assets/style/theme';
 import Button from 'components/common/Button';
-import { useState } from 'react';
+import { OrderContext } from 'contexts/OrderContext';
+import { useContext, useState } from 'react';
 import styled from 'styled-components';
 import OrderItem from './OrderItem';
 
@@ -61,6 +62,8 @@ const FlexBox = styled.div`
 `;
 
 function MyOrders() {
+    const context = useContext(OrderContext);
+
     const [totalPrice, setTotalPrice] = useState(0);
     const [totalQuantity, setTotalQuantity] = useState(0);
 

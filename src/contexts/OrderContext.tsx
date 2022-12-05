@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useRef, useState } from 'react';
 import IOrder from 'types/Order';
 
 type OrderContextType = {
@@ -17,9 +17,11 @@ const OrderContext = createContext<OrderContextType>({
 
 const OrderProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
     const [orders, setOrders] = useState<IOrder[]>([]);
+    const nextId = useRef(0);
 
     const addOrder = (order: IOrder) => {
-        setOrders(orders.concat(order));
+        setOrders(orders.concat({ ...order, id: nextId.current }));
+        nextId.current += 1;
     };
 
     const cancelOrder = (id: number) => {
