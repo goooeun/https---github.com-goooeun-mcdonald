@@ -5,7 +5,7 @@ import {
     RiIndeterminateCircleLine,
 } from 'react-icons/ri';
 import theme from 'assets/style/theme';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import RadioButton from 'components/common/RadioButton';
 import RadioBox from 'components/common/RadioBox';
 import IOrder from 'types/Order';
@@ -115,13 +115,21 @@ function OrderItem({ item }: OrderItemProps) {
     const context = useOrderContext();
     const { menu } = item;
 
+    const price = useMemo(() => {
+        const comboPrice =
+            menu.comboPrice === undefined ? menu.price : menu.comboPrice;
+        const menuPrice = item.combo ? comboPrice : menu.price;
+
+        return item.quantity * menuPrice;
+    }, [item.quantity, item.combo]);
+
     const changeComboType = (type: string) => {
-        // setPrice(type === 'single' ? 6900 : 10200);
+        const isCombo = type === 'single' ? false : true;
+        context.changeOrder({ ...item, combo: isCombo });
     };
 
     const changeQuantity = (count: number) => {
-        const order = { ...item, quantity: item.quantity + count };
-        context.changeOrder(order);
+        context.changeOrder({ ...item, quantity: item.quantity + count });
     };
 
     return (
@@ -137,10 +145,7 @@ function OrderItem({ item }: OrderItemProps) {
                 <FlexBox>
                     <div>가격</div>
                     <div className="green">
-                        <div className="price">
-                            {item.combo ? menu.comboPrice : menu.price}
-                        </div>
-                        원
+                        <div className="price">{price}</div>원
                     </div>
                 </FlexBox>
                 <FlexBox>
