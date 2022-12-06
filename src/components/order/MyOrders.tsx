@@ -1,8 +1,8 @@
 import theme from 'assets/style/theme';
 import Button from 'components/common/Button';
-import { OrderContext } from 'contexts/OrderContext';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
+import useOrderContext from 'utils/hooks/useOrderContext';
 import OrderItem from './OrderItem';
 
 const Container = styled.div`
@@ -62,7 +62,9 @@ const FlexBox = styled.div`
 `;
 
 function MyOrders() {
-    const context = useContext(OrderContext);
+    const context = useOrderContext();
+
+    const orders = context.orders;
 
     const [totalPrice, setTotalPrice] = useState(0);
     const [totalQuantity, setTotalQuantity] = useState(0);
@@ -76,7 +78,10 @@ function MyOrders() {
                 <h5>사이다아파트 607호</h5>
             </Address>
             <OrderView>
-                <OrderItem />
+                {orders &&
+                    orders.map((order) => {
+                        return <OrderItem key={order.id} item={order} />;
+                    })}
             </OrderView>
             <BottomArea>
                 <FlexBox>

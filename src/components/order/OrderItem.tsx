@@ -8,6 +8,9 @@ import theme from 'assets/style/theme';
 import { useEffect, useRef, useState } from 'react';
 import RadioButton from 'components/common/RadioButton';
 import RadioBox from 'components/common/RadioBox';
+import IOrder from 'types/Order';
+import useOrderContext from 'utils/hooks/useOrderContext';
+
 const Block = styled.div`
     width: 100%;
     height: 170px;
@@ -104,51 +107,56 @@ const CancelButton = styled.button`
     background-color: transparent;
 `;
 
-function OrderItem() {
-    const [quantity, setQuantity] = useState(1);
-    const [price, setPrice] = useState(6900);
-    useEffect(() => {
-        if (quantity < 1) {
-            setQuantity(1);
-        }
-        if (quantity > 10) {
-            setQuantity(10);
-            alert('최대 수량은 10개입니다.');
-        }
-    }, [quantity]);
+type OrderItemProps = {
+    item: IOrder;
+};
+
+function OrderItem({ item }: OrderItemProps) {
+    const context = useOrderContext();
+    const { menu } = item;
 
     const changeComboType = (type: string) => {
-        setPrice(type === 'single' ? 6900 : 10200);
+        // setPrice(type === 'single' ? 6900 : 10200);
+    };
+
+    const changeQuantity = (count: number) => {
+        const order = { ...item, quantity: item.quantity + count };
+        context.changeOrder(order);
     };
 
     return (
         <Block>
             <LeftArea>
-                <img src={`${process.env.PUBLIC_URL}/assets/burger/001.png`} />
-                <p>베이컨토마토디럭스</p>
-                <span>Bacon Tomato Deluxe</span>
+                <img
+                    src={`${process.env.PUBLIC_URL}/assets/burger/${menu.img}`}
+                />
+                <p>{menu.name}</p>
+                <span>{menu.nameEn}</span>
             </LeftArea>
             <RightArea>
                 <FlexBox>
                     <div>가격</div>
                     <div className="green">
-                        <div className="price">{price}</div>원
+                        <div className="price">
+                            {item.combo ? menu.comboPrice : menu.price}
+                        </div>
+                        원
                     </div>
                 </FlexBox>
                 <FlexBox>
                     <div>수량</div>
                     <QuantityCounter>
                         <button
-                            onClick={() => setQuantity(quantity - 1)}
-                            disabled={quantity > 1 ? false : true}
+                            onClick={() => changeQuantity(-1)}
+                            disabled={item.quantity > 1 ? false : true}
                         >
                             <RiIndeterminateCircleLine />
                         </button>
 
-                        {quantity}
+                        {item.quantity}
                         <button
-                            onClick={() => setQuantity(quantity + 1)}
-                            disabled={quantity < 10 ? false : true}
+                            onClick={() => changeQuantity(1)}
+                            disabled={item.quantity < 10 ? false : true}
                         >
                             <RiAddCircleLine />
                         </button>
@@ -157,7 +165,7 @@ function OrderItem() {
                 <RadioBox>
                     <RadioButton
                         label="단품"
-                        name="menuType"
+                        name={`menuType${item.id}`}
                         id="single"
                         value="false"
                         onChange={() => changeComboType('single')}
@@ -165,7 +173,7 @@ function OrderItem() {
                     />
                     <RadioButton
                         label="세트"
-                        name="menuType"
+                        name={`menuType${item.id}`}
                         id="combo"
                         value="true"
                         onChange={() => changeComboType('combo')}
