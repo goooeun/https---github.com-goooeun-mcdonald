@@ -1,7 +1,8 @@
 import theme from 'assets/style/theme';
 import Button from 'components/common/Button';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import styled from 'styled-components';
+import IOrder from 'types/Order';
 import useOrderContext from 'utils/hooks/useOrderContext';
 import OrderItem from './OrderItem';
 
@@ -61,13 +62,33 @@ const FlexBox = styled.div`
     }
 `;
 
+function countTotalValue(orders: IOrder[]) {
+    let totalQuantity = 0;
+    const totalPrice = orders
+        .map((order) => {
+            const { menu } = order;
+            const comboPrice =
+                menu.comboPrice === undefined ? menu.price : menu.comboPrice;
+            const menuPrice = order.combo ? comboPrice : menu.price;
+
+            totalQuantity += order.quantity;
+
+            return order.quantity * menuPrice;
+        })
+        .reduce((acc, cur) => acc + cur, 0);
+
+    return { totalPrice, totalQuantity };
+}
+
 function MyOrders() {
     const context = useOrderContext();
 
     const orders = context.orders;
 
-    const [totalPrice, setTotalPrice] = useState(0);
-    const [totalQuantity, setTotalQuantity] = useState(0);
+    const { totalPrice, totalQuantity } = useMemo(
+        () => countTotalValue(orders),
+        [orders]
+    );
 
     return (
         <Container>
