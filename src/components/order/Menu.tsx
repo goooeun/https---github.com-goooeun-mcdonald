@@ -1,10 +1,8 @@
 import theme from 'assets/style/theme';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import IMenu from 'types/Menu';
 import MenuList from './MenuList';
-import { collection, getDocs } from 'firebase/firestore';
-import database from '../../firebase';
 
 const Container = styled.div`
     width: calc(100% - 350px);
@@ -34,20 +32,11 @@ const Navigation = styled.div`
     }
 `;
 
-function Menu() {
-    const [menu, setMenu] = useState<IMenu[]>([]);
-    useEffect(() => {
-        async function getMenu() {
-            const menuCollection = collection(database, 'menu');
-            const snapshot = await getDocs(menuCollection);
-            const data: IMenu[] = snapshot.docs.map(
-                (doc) => doc.data() as IMenu
-            );
-            setMenu(data);
-        }
-        getMenu();
-    }, []);
+type MenuProps = {
+    menu: IMenu[];
+};
 
+function Menu({ menu }: MenuProps) {
     const [menuFilter, setMenuFilter] = useState('');
 
     return (
