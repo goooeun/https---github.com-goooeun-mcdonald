@@ -132,6 +132,13 @@ function OrderItem({ item }: OrderItemProps) {
         context.changeOrder({ ...item, quantity: item.quantity + count });
     };
 
+    const removeMenu = () => {
+        console.log(item);
+        if (item.id !== undefined) {
+            context.cancelOrder(item.id);
+        }
+    };
+
     return (
         <Block>
             <LeftArea>
@@ -186,7 +193,7 @@ function OrderItem({ item }: OrderItemProps) {
                     />
                 </RadioBox>
             </RightArea>
-            <CancelButton>
+            <CancelButton onClick={removeMenu}>
                 <RiCloseCircleFill />
             </CancelButton>
         </Block>
