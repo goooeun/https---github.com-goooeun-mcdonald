@@ -152,7 +152,7 @@ function OrderItem({ item }: OrderItemProps) {
                 <Box>
                     <div>가격</div>
                     <div className="green">
-                        <div className="price">{price}</div>원
+                        <div className="price">{price.toLocaleString()}</div> 원
                     </div>
                 </Box>
                 <Box>

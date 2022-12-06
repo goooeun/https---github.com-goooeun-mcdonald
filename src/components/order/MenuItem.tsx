@@ -68,8 +68,10 @@ function MenuItem({ item }: ItemProps) {
                 <h3>{item.name}</h3>
                 <p>{item.nameEn}</p>
                 <Price>
-                    <span>단품 {item.price}원</span>
-                    {item.comboPrice && <span>세트 {item.comboPrice}원</span>}
+                    <span>단품 {item.price.toLocaleString()} 원</span>
+                    {item.comboPrice && (
+                        <span>세트 {item.comboPrice.toLocaleString()} 원</span>
+                    )}
                 </Price>
                 <AddButton onClick={addMenu}>
                     <FiShoppingBag />

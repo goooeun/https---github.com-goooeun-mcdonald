@@ -102,11 +102,11 @@ function MyOrders() {
             <FlexBox direction="column" alignItems="flex-start">
                 <Wrapper justifyContent="space-between">
                     <div className="text">주문금액</div>
-                    <span>{totalPrice}원</span>
+                    <span>{totalPrice.toLocaleString()} 원</span>
                 </Wrapper>
                 <Wrapper justifyContent="space-between">
                     <div className="text">총 수량</div>
-                    <span>{totalQuantity}개</span>
+                    <span>{totalQuantity.toLocaleString()} 개</span>
                 </Wrapper>
                 <Button color="yellow" size="wide">
                     주문하기
