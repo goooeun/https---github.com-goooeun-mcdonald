@@ -5,9 +5,9 @@ import {
     RiIndeterminateCircleLine,
 } from 'react-icons/ri';
 import theme from 'assets/style/theme';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo } from 'react';
 import RadioButton from 'components/common/RadioButton';
-import RadioBox from 'components/common/RadioBox';
+import FlexBox from 'components/common/FlexBox';
 import IOrder from 'types/Order';
 import useOrderContext from 'utils/hooks/useOrderContext';
 
@@ -50,7 +50,7 @@ const RightArea = styled.div`
     justify-content: space-around;
 }`;
 
-const FlexBox = styled.div`
+const Box = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -149,13 +149,13 @@ function OrderItem({ item }: OrderItemProps) {
                 <span>{menu.nameEn}</span>
             </LeftArea>
             <RightArea>
-                <FlexBox>
+                <Box>
                     <div>가격</div>
                     <div className="green">
                         <div className="price">{price}</div>원
                     </div>
-                </FlexBox>
-                <FlexBox>
+                </Box>
+                <Box>
                     <div>수량</div>
                     <QuantityCounter>
                         <button
@@ -173,8 +173,8 @@ function OrderItem({ item }: OrderItemProps) {
                             <RiAddCircleLine />
                         </button>
                     </QuantityCounter>
-                </FlexBox>
-                <RadioBox>
+                </Box>
+                <FlexBox justifyContent="space-between">
                     <RadioButton
                         label="단품"
                         name={`menuType${item.id}`}
@@ -191,7 +191,7 @@ function OrderItem({ item }: OrderItemProps) {
                         onChange={() => changeComboType('combo')}
                         isChecked={false}
                     />
-                </RadioBox>
+                </FlexBox>
             </RightArea>
             <CancelButton onClick={removeMenu}>
                 <RiCloseCircleFill />

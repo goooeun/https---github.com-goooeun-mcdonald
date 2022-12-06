@@ -1,5 +1,6 @@
 import theme from 'assets/style/theme';
 import Button from 'components/common/Button';
+import FlexBox from 'components/common/FlexBox';
 import { useMemo, useState } from 'react';
 import styled from 'styled-components';
 import IOrder from 'types/Order';
@@ -41,14 +42,8 @@ const OrderView = styled.div`
     flex-grow: 1;
 `;
 
-const BottomArea = styled.div`
-    display: flex;
-    flex-direction: column;
-`;
-
-const FlexBox = styled.div`
-    display: flex;
-    justify-content: space-between;
+const Wrapper = styled(FlexBox)`
+    width: 100%;
     margin-bottom: 8px;
 
     .text {
@@ -104,19 +99,19 @@ function MyOrders() {
                         return <OrderItem key={order.id} item={order} />;
                     })}
             </OrderView>
-            <BottomArea>
-                <FlexBox>
+            <FlexBox direction="column" alignItems="flex-start">
+                <Wrapper justifyContent="space-between">
                     <div className="text">주문금액</div>
                     <span>{totalPrice}원</span>
-                </FlexBox>
-                <FlexBox>
+                </Wrapper>
+                <Wrapper justifyContent="space-between">
                     <div className="text">총 수량</div>
                     <span>{totalQuantity}개</span>
-                </FlexBox>
+                </Wrapper>
                 <Button color="yellow" size="wide">
                     주문하기
                 </Button>
-            </BottomArea>
+            </FlexBox>
         </Container>
     );
 }
