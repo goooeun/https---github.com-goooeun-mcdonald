@@ -1,21 +1,19 @@
 import SearchBar from 'components/common/SearchBar';
 import StoreList from 'components/store/StoreList';
 import database from '../firebase';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, limit, query } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
 import IStore from 'types/Store';
-import styled from 'styled-components';
-
-const Wrapper = styled.div`
-    padding: 20px;
-`;
+import Pagination from 'components/common/Pagination';
 
 function Store() {
     const [stores, setStores] = useState<IStore[]>([]);
+    const [page, setPage] = useState(1);
+
+    const storeCollection = query(collection(database, 'store'), limit(5));
     useEffect(() => {
         async function getStores() {
-            const menuCollection = collection(database, 'store');
-            const snapshot = await getDocs(menuCollection);
+            const snapshot = await getDocs(storeCollection);
             const data: IStore[] = snapshot.docs.map(
                 (doc) => doc.data() as IStore
             );
@@ -23,12 +21,21 @@ function Store() {
         }
         getStores();
     }, []);
+
+    const changePage = (i: number) => {
+        setPage(i);
+    };
     return (
         <>
             <SearchBar />
-            <Wrapper>
-                <StoreList stores={stores} />
-            </Wrapper>
+            <StoreList stores={stores} />
+            <Pagination
+                total={stores.length}
+                limit={3}
+                count={5}
+                page={page}
+                changePage={changePage}
+            />
         </>
     );
 }

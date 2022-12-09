@@ -9,6 +9,10 @@ import {
     MdDeliveryDining,
 } from 'react-icons/md';
 
+const Wrapper = styled.div`
+    padding: 20px;
+`;
+
 const Name = styled.p`
     font-size: 16px;
     font-weight: bold;
@@ -37,14 +41,14 @@ type StoreListType = {
 
 const StoreList: React.FC<StoreListType> = ({ stores }) => {
     return (
-        <div>
+        <Wrapper>
             <Table thAlign="center" tdAlign="center">
                 <caption>
                     * 영업시간은 매장 사정에 따라 변경 될 수 있습니다
                 </caption>
                 <thead>
                     <tr>
-                        <th>매장명/주소</th>
+                        <th>매장명 / 주소</th>
                         <th>전화번호</th>
                         <th>영업시간</th>
                         <th>이용가능 서비스</th>
@@ -95,7 +99,7 @@ const StoreList: React.FC<StoreListType> = ({ stores }) => {
                         })}
                 </tbody>
             </Table>
-        </div>
+        </Wrapper>
     );
 };
 
