@@ -1,8 +1,9 @@
 import styled from 'styled-components';
-import { FiShoppingBag } from 'react-icons/fi';
+import { BsCart, BsCartCheckFill } from 'react-icons/bs';
 import theme from 'assets/style/theme';
 import IMenu from 'types/Menu';
 import useOrderContext from 'utils/hooks/useOrderContext';
+import { useMemo } from 'react';
 
 const Item = styled.div`
     width: calc(100% / 2 - 8px);
@@ -13,8 +14,10 @@ const Item = styled.div`
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
     margin-bottom: 16px;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    @media (max-width: 1300px) {
+        flex-direction: column;
+    }
 `;
 const Image = styled.img`
     width: 120px;
@@ -29,11 +32,16 @@ const Price = styled.div`
     margin-top: 16px;
 `;
 
-const AddButton = styled.button`
+type OrderedProps = {
+    isOrdered: boolean;
+};
+
+const AddButton = styled.button<OrderedProps>`
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background-color: ${theme.colors.yellow};
+    background-color: ${(props) =>
+        props.isOrdered ? theme.colors.green : theme.colors.yellow};
     color: #fff;
     font-size: 24px;
     border: none;
@@ -48,6 +56,13 @@ type ItemProps = {
 
 function MenuItem({ item }: ItemProps) {
     const context = useOrderContext();
+
+    const isOrdered = useMemo(() => {
+        const isExist = context.orders.find(
+            (order) => order.menu.id === item.id
+        );
+        return isExist === undefined ? false : true;
+    }, [context.orders.length]);
 
     const addMenu = () => {
         context.addOrder({
@@ -73,8 +88,8 @@ function MenuItem({ item }: ItemProps) {
                         <span>세트 {item.comboPrice.toLocaleString()} 원</span>
                     )}
                 </Price>
-                <AddButton onClick={addMenu}>
-                    <FiShoppingBag />
+                <AddButton onClick={addMenu} isOrdered={isOrdered}>
+                    {isOrdered ? <BsCartCheckFill /> : <BsCart />}
                 </AddButton>
             </div>
         </Item>

@@ -54,7 +54,7 @@ function MenuItem({ item }: MenuType) {
             <Link to={`/menu/${item.id}`}>
                 <ImgWrapper>
                     <Img
-                        src={`${process.env.PUBLIC_URL}/assets/burger/${item.img}`}
+                        src={`${process.env.PUBLIC_URL}/assets/${item.type}/${item.img}`}
                     />
                 </ImgWrapper>
                 <h3>{item.name}</h3>

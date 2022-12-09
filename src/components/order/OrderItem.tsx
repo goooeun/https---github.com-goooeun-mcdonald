@@ -133,7 +133,6 @@ function OrderItem({ item }: OrderItemProps) {
     };
 
     const removeMenu = () => {
-        console.log(item);
         if (item.id !== undefined) {
             context.cancelOrder(item.id);
         }
@@ -143,7 +142,7 @@ function OrderItem({ item }: OrderItemProps) {
         <Block>
             <LeftArea>
                 <img
-                    src={`${process.env.PUBLIC_URL}/assets/burger/${menu.img}`}
+                    src={`${process.env.PUBLIC_URL}/assets/${menu.type}/${menu.img}`}
                 />
                 <p>{menu.name}</p>
                 <span>{menu.nameEn}</span>
@@ -174,24 +173,26 @@ function OrderItem({ item }: OrderItemProps) {
                         </button>
                     </QuantityCounter>
                 </Box>
-                <FlexBox justifyContent="space-between">
-                    <RadioButton
-                        label="단품"
-                        name={`menuType${item.id}`}
-                        id="single"
-                        value="false"
-                        onChange={() => changeComboType('single')}
-                        isChecked={true}
-                    />
-                    <RadioButton
-                        label="세트"
-                        name={`menuType${item.id}`}
-                        id="combo"
-                        value="true"
-                        onChange={() => changeComboType('combo')}
-                        isChecked={false}
-                    />
-                </FlexBox>
+                {menu.type === 'burger' && (
+                    <FlexBox justifyContent="space-between">
+                        <RadioButton
+                            label="단품"
+                            name={`menuType${item.id}`}
+                            id="single"
+                            value="false"
+                            onChange={() => changeComboType('single')}
+                            isChecked={true}
+                        />
+                        <RadioButton
+                            label="세트"
+                            name={`menuType${item.id}`}
+                            id="combo"
+                            value="true"
+                            onChange={() => changeComboType('combo')}
+                            isChecked={false}
+                        />
+                    </FlexBox>
+                )}
             </RightArea>
             <CancelButton onClick={removeMenu}>
                 <RiCloseCircleFill />
