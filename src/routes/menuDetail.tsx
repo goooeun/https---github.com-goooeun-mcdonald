@@ -104,7 +104,7 @@ function MenuDetail() {
             <section style={{ flexGrow: 1 }}>
                 <Item>
                     <h3>영양정보</h3>
-                    <Table>
+                    <Table thAlign="left" tdAlign="center">
                         <thead>
                             <tr>
                                 <th>영양소</th>
