@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import theme from 'assets/style/theme';
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
-import { doc, getDoc } from 'firebase/firestore';
 import database from '../firebase';
+import { doc, getDoc } from 'firebase/firestore';
 import IMenu from 'types/Menu';
 import styled from 'styled-components';
+import theme from 'assets/style/theme';
+import Table from 'components/common/Table';
 import { IoArrowBackOutline } from 'react-icons/io5';
 
 const Container = styled.div`
@@ -51,29 +52,6 @@ const Item = styled.div`
     }
     h3 {
         margin-bottom: 16px;
-    }
-`;
-
-const Table = styled.table`
-    width: 100%;
-    border-collapse: collapse;
-    border-spacing: 0;
-    border-top: 2px solid ${theme.colors.gray};
-    border-bottom: 2px solid ${theme.colors.gray};
-    font-size: 14px;
-    tr {
-        height: 60px;
-        th {
-            text-align: left;
-            padding-left: 16px;
-            border-right: 1px solid ${theme.colors.gray};
-        }
-        td {
-            text-align: center;
-        }
-        &:first-child {
-            border-bottom: 1px solid ${theme.colors.gray};
-        }
     }
 `;
 
