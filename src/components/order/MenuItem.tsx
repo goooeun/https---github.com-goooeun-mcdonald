@@ -76,7 +76,7 @@ function MenuItem({ item }: ItemProps) {
         <Item>
             <div>
                 <Image
-                    src={`${process.env.PUBLIC_URL}/assets/${item.type}/${item.img}`}
+                    src={`${process.env.PUBLIC_URL}/assets/images/${item.type}/${item.img}`}
                 />
             </div>
             <div>

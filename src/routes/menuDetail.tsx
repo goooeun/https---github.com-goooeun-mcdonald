@@ -92,7 +92,7 @@ function MenuDetail() {
                 <div>
                     <ImgWrapper>
                         <img
-                            src={`${process.env.PUBLIC_URL}/assets/${menu?.type}/${menu?.img}`}
+                            src={`${process.env.PUBLIC_URL}/assets/images/${menu?.type}/${menu?.img}`}
                         />
                     </ImgWrapper>
                     <h2>{menu?.name}</h2>

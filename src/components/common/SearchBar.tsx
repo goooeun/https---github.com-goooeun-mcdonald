@@ -1,4 +1,5 @@
 import theme from 'assets/style/theme';
+import { KeyboardEventHandler, useRef } from 'react';
 import styled from 'styled-components';
 import Button from './Button';
 
@@ -27,16 +28,34 @@ const InputBox = styled.div`
 `;
 
 type SearchBarProps = {
-    text?: string;
+    label?: string;
+    changeKeyword: (keyword: string) => void;
 };
 
-function SearchBar({ text }: SearchBarProps) {
+function SearchBar({ label, changeKeyword }: SearchBarProps) {
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    const clickSearchButton = () => {
+        const inputText = inputRef.current ? inputRef.current.value : '';
+        if (inputText.length !== 0 && inputText.length < 2) {
+            alert('두글자 이상 입력해주세요.');
+            return;
+        }
+        changeKeyword(inputText);
+    };
+
+    const handleKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            clickSearchButton();
+        }
+    };
+
     return (
         <Bar>
-            {text && <TitleLabel>{text}</TitleLabel>}
+            {label && <TitleLabel>{label}</TitleLabel>}
             <InputBox>
-                <input type="text " />
-                <Button>검색</Button>
+                <input type="text" ref={inputRef} onKeyDown={handleKeydown} />
+                <Button onClick={clickSearchButton}>검색</Button>
             </InputBox>
         </Bar>
     );

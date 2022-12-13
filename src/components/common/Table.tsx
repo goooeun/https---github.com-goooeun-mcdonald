@@ -22,6 +22,7 @@ const Table = styled.table<TableProps>`
         margin-bottom: 8px;
     }
     tr {
+        border-bottom: 1px solid ${theme.colors.gray};
         height: 60px;
         th {
             text-align: ${(props) => props.thAlign};
@@ -43,9 +44,6 @@ const Table = styled.table<TableProps>`
             &.center {
                 text-align: center;
             }
-        }
-        &:first-child {
-            border-bottom: 1px solid ${theme.colors.gray};
         }
     }
 `;
