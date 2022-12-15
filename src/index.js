@@ -1,4 +1,3 @@
-import { OrderProvider } from 'contexts/OrderContext';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
@@ -23,7 +22,6 @@ const router = createBrowserRouter([
                 element: <Menu />,
             },
             {
-                errorElement: <ErrorPage />,
                 path: 'menu/:id',
                 element: <MenuDetail />,
             },
@@ -38,7 +36,6 @@ const router = createBrowserRouter([
         ],
     },
 ]);
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>

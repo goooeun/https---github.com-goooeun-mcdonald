@@ -51,7 +51,7 @@ type MenuType = {
 function MenuItem({ item }: MenuType) {
     return (
         <Wrapper>
-            <Link to={`/menu/${item.id}`}>
+            <Link to={`/menu/${item._id}`}>
                 <ImgWrapper>
                     <Img
                         src={`${process.env.PUBLIC_URL}/assets/images/${item.type}/${item.img}`}

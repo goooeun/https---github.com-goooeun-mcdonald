@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
-import database from '../firebase';
-import { doc, getDoc } from 'firebase/firestore';
 import IMenu from 'types/Menu';
 import styled from 'styled-components';
 import theme from 'assets/style/theme';
 import Table from 'components/common/Table';
 import { IoArrowBackOutline } from 'react-icons/io5';
+import axios from 'axios';
+import getFetchData from 'utils/getFetchData';
 
 const Container = styled.div`
     display: flex;
@@ -56,29 +56,31 @@ const Item = styled.div`
 `;
 
 function MenuDetail() {
+    const [menu, setMenu] = useState<IMenu>();
     const navigate = useNavigate();
     const { id } = useParams();
+    const { fetchData } = getFetchData();
 
-    const [menu, setMenu] = useState<IMenu>();
-    useEffect(() => {
-        if (!id) {
-            throw new Response('', {
-                status: 404,
-                statusText: 'Not Fount Page.',
-            });
-        }
-
-        async function getMenuDetail() {
-            const docRef = doc(database, 'menu', id as string);
-            const snapshot = await getDoc(docRef);
-
-            if (snapshot.exists()) {
-                setMenu(snapshot.data() as IMenu);
-            } else {
-                console.log('error - No match data');
+    async function getMenuDetail() {
+        try {
+            if (!id) {
+                throw new Response('', {
+                    status: 404,
+                    statusText: 'Not Fount Page.',
+                });
             }
+
+            const data = await fetchData(`/menus/${id}`);
+            setMenu(data[0]);
+        } catch (error) {
+            console.error(error);
         }
-        getMenuDetail();
+    }
+
+    useEffect(() => {
+        (async function () {
+            getMenuDetail();
+        })();
     }, []);
 
     return (

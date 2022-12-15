@@ -142,7 +142,7 @@ function OrderItem({ item }: OrderItemProps) {
         <Block>
             <LeftArea>
                 <img
-                    src={`${process.env.PUBLIC_URL}/assets/${menu.type}/${menu.img}`}
+                    src={`${process.env.PUBLIC_URL}/assets/images/${menu.type}/${menu.img}`}
                 />
                 <p>{menu.name}</p>
                 <span>{menu.nameEn}</span>

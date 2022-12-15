@@ -23,7 +23,7 @@ function MenuList({ list, filter }: MenuListProps) {
         <ItemList>
             {menuList &&
                 menuList.map((item) => {
-                    return <MenuItem key={item.id} item={item} />;
+                    return <MenuItem key={item._id} item={item} />;
                 })}
         </ItemList>
     );

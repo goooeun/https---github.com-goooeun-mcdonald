@@ -37,10 +37,9 @@ const Option = styled.p`
 
 type StoreListType = {
     stores: IStore[];
-    keyword: string;
 };
 
-const StoreList: React.FC<StoreListType> = ({ stores, keyword }) => {
+const StoreList: React.FC<StoreListType> = ({ stores }) => {
     return (
         <Wrapper>
             <Table thAlign="center" tdAlign="center">
@@ -58,12 +57,6 @@ const StoreList: React.FC<StoreListType> = ({ stores, keyword }) => {
                 <tbody>
                     {stores &&
                         stores.map((store) => {
-                            if (
-                                keyword !== '' &&
-                                store.name.indexOf(keyword) < 0
-                            ) {
-                                return;
-                            }
                             return (
                                 <tr key={store.name}>
                                     <td className="left">

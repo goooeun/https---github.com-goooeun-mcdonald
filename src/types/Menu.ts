@@ -1,7 +1,7 @@
 type BurgerType = 'burger' | 'drink';
 
 interface IMenu {
-    id: string;
+    _id: string;
     name: string;
     nameEn: string;
     price: number;

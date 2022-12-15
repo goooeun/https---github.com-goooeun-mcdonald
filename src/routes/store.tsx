@@ -1,49 +1,44 @@
+import { useState, useEffect } from 'react';
 import SearchBar from 'components/common/SearchBar';
 import StoreList from 'components/store/StoreList';
-import database from '../firebase';
-import {
-    collection,
-    getCountFromServer,
-    getDocs,
-    limit,
-    query,
-    QuerySnapshot,
-    startAfter,
-} from 'firebase/firestore';
-import { useState, useEffect } from 'react';
 import IStore from 'types/Store';
 import Pagination from 'components/common/Pagination';
+import getFetchData from 'utils/getFetchData';
+import IPagination from 'types/Pagination';
+import qs from 'query-string';
 
 function Store() {
     const [stores, setStores] = useState<IStore[]>([]);
-    const [storeCount, setStoreCount] = useState(0);
-    const [lastVisible, setLastVisible] = useState<any>(undefined);
+    const [total, setTotal] = useState(0);
     const [page, setPage] = useState(1);
     const [storeKeyword, setStoreKeyword] = useState('');
+    const { fetchData } = getFetchData();
 
-    const storeCollection = collection(database, 'store');
+    // pagination
+    const limit: number = 3;
+    const offset: number = 5;
 
     useEffect(() => {
-        async function getInitialStore() {
-            const snapshot = await getCountFromServer(storeCollection);
-            setStoreCount(snapshot.data().count);
-            getStores();
-        }
-        getInitialStore();
-    }, []);
+        (async function (page, storeKeyword) {
+            await getStores();
+        })(page, storeKeyword);
+    }, [page, storeKeyword]);
 
     async function getStores() {
-        const _query =
-            lastVisible === undefined
-                ? query(storeCollection, limit(3))
-                : query(storeCollection, startAfter(lastVisible), limit(3));
-
-        const storeSnapshot = await getDocs(_query);
-        setLastVisible(storeSnapshot.docs[storeSnapshot.docs.length - 1]);
-        const data: IStore[] = storeSnapshot.docs.map(
-            (doc) => doc.data() as IStore
-        );
-        setStores(data);
+        try {
+            if (storeKeyword !== '') setPage(1);
+            const queryString = qs.stringify({
+                page,
+                limit,
+                keyword: storeKeyword,
+            });
+            const query = `/stores?${queryString}`;
+            const data = await fetchData(query);
+            setTotal(data?.totalDocs);
+            setStores(data?.docs);
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     const changeKeyword = (keyword: string) => {
@@ -52,17 +47,16 @@ function Store() {
 
     const changePage = (i: number) => {
         setPage(i);
-        getStores();
     };
 
     return (
         <>
-            <SearchBar label="지점명" changeKeyword={changeKeyword} />
-            <StoreList stores={stores} keyword={storeKeyword} />
+            <SearchBar label="매장명" changeKeyword={changeKeyword} />
+            <StoreList stores={stores} />
             <Pagination
-                total={storeCount}
-                limit={3}
-                count={5}
+                total={total}
+                limit={limit}
+                offset={offset}
                 page={page}
                 changePage={changePage}
             />

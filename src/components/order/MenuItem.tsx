@@ -59,7 +59,7 @@ function MenuItem({ item }: ItemProps) {
 
     const isOrdered = useMemo(() => {
         const isExist = context.orders.find(
-            (order) => order.menu.id === item.id
+            (order) => order.menu._id === item._id
         );
         return isExist === undefined ? false : true;
     }, [context.orders.length]);

@@ -17,7 +17,7 @@ function MenuList({ menu }: MenuListType) {
         <Wrapper>
             {menu &&
                 menu.map((item) => {
-                    return <MenuItem key={item.id} item={item} />;
+                    return <MenuItem key={item._id} item={item} />;
                 })}
         </Wrapper>
     );

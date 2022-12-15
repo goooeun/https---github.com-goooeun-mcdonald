@@ -1,4 +1,5 @@
 interface IStore {
+    _id: string;
     name: string;
     address: string;
     address2: string;

@@ -43,7 +43,7 @@ const PageButton = styled.button`
 type PaginationProps = {
     total: number;
     limit: number;
-    count: number;
+    offset: number;
     page: number;
     changePage: (i: number) => void;
 };
@@ -53,7 +53,7 @@ type PaginationProps = {
  *
  * @props total: 총 아이템 수
  * @props limit: 한 페이지에 보여지는 아이템 수
- * @props count: 한 화면에 보여지는 페이지 수 (min = 3)
+ * @props offset: 한 화면에 보여지는 페이지 수 (min = 3)
  * @props page: 현재 페이지
  * @props changePage: 페이지 state 변경 함수
  *
@@ -61,16 +61,16 @@ type PaginationProps = {
 const Pagination: React.FC<PaginationProps> = ({
     total,
     limit,
-    count,
+    offset,
     page,
     changePage,
 }) => {
     const totalPage = Math.ceil(total / limit);
-    const pageGroup = Math.ceil(page / count);
+    const pageGroup = Math.ceil(page / offset);
 
-    let lastPage = pageGroup * count;
+    let lastPage = pageGroup * offset;
     if (lastPage > totalPage) lastPage = totalPage;
-    const firstPage = count * (pageGroup - 1) + 1;
+    const firstPage = offset * (pageGroup - 1) + 1;
 
     let pageList = [];
     for (let i = firstPage; i <= lastPage; i++) {
