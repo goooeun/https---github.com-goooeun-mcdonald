@@ -8,15 +8,16 @@ const Wrapper = styled.div`
     @media screen and (max-width: 1200px) {
         width: calc((100% - 66px) / 4);
     }
+    height: 230px;
     border-radius: 16px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
     a {
-        height: 230px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         text-align: center;
+        height: 100%;
     }
     &:hover {
         border: 1px solid ${theme.colors.yellow};
